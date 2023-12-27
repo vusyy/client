@@ -30,7 +30,7 @@ const Chat = () => {
     // socket = io(ENDPOINT);
 
     setRoom(room);
-    setName(name)
+    setName(name);
 
     socket.emit('join', { name, room }, (error) => {
       if(error) {
@@ -43,30 +43,40 @@ const Chat = () => {
     socket.on('resived-message', (messagee)=> {
       setMessages([...messages, messagee])
     })
+
     console.log(messages)
+
   },[messages, socket])
   
-//   useEffect(() => {
-//     socket.on('message', message => {
-//       setMessages(messages => [ ...messages, message ]);
-//     });
-    
-//     socket.on("roomData", ({ users }) => {
-//       setUsers(users);
-//       console.log(users)
-//     });
+  //   useEffect(() => {
+    //     socket.on('message', message => {
+      //       setMessages(messages => [ ...messages, message ]);
+      //     });
+      
+      // socket.on("roomData", ({ users }) => {
+      //   setUsers(users);
+      //   console.log(users)
+      // });
 // }, []);
 
   const sendMessage = (event) => {
+
+
+    
     event.preventDefault();
+    // if (messages.length > 7) {
+    //   setMessage(messages.splice(0,1))
+
+    // }
     const MessageData = {
       message: message,
-      user: name
+      user: name,
     }
     if(!message == ''){
       socket.emit('send-message', MessageData);
+      
     }else {
-      alert('message can not be empty')
+      // alert('message can not be empty')
     }
 
     //   socket.on("roomData", ({ users }) => {
@@ -77,6 +87,7 @@ const Chat = () => {
     //   console.log(message)
     //   socket.emit('sendMessage', message, () => setMessage(''));
     // }
+
     setMessage('')
   }
 
@@ -87,7 +98,7 @@ const Chat = () => {
           <Messages messages={messages} name={name} />
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
-      <TextContainer users={users}/>
+      {/* <TextContainer users={users}/> */}
     </div>
   );
 }
