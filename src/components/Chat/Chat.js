@@ -48,16 +48,16 @@ const Chat = () => {
 
   },[messages, socket])
   
-  //   useEffect(() => {
-    //     socket.on('message', message => {
-      //       setMessages(messages => [ ...messages, message ]);
-      //     });
+    useEffect(() => {
+        socket.on('message', message => {
+            setMessages(messages => [ ...messages, message ]);
+          });
       
-      // socket.on("roomData", ({ users }) => {
-      //   setUsers(users);
-      //   console.log(users)
-      // });
-// }, []);
+      socket.on("roomData", ({ users }) => {
+        setUsers(users);
+        console.log(users)
+      });
+}, []);
 
   const sendMessage = (event) => {
 
@@ -79,14 +79,14 @@ const Chat = () => {
       // alert('message can not be empty')
     }
 
-    //   socket.on("roomData", ({ users }) => {
-    //   setUsers(users);
-    //   console.log(users)
-    // });
-    // if(message) {
-    //   console.log(message)
-    //   socket.emit('sendMessage', message, () => setMessage(''));
-    // }
+      socket.on("roomData", ({ users }) => {
+      setUsers(users);
+      console.log(users)
+    });
+    if(message) {
+      console.log(message)
+      socket.emit('sendMessage', message, () => setMessage(''));
+    }
 
     setMessage('')
   }
@@ -98,7 +98,7 @@ const Chat = () => {
           <Messages messages={messages} name={name} />
           <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
       </div>
-      {/* <TextContainer users={users}/> */}
+      <TextContainer users={users}/>
     </div>
   );
 }
